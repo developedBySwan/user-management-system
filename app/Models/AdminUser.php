@@ -3,11 +3,17 @@
 namespace App\Models;
 
 use App\Models\Permissions\Role;
+use Illuminate\Database\Eloquent\Concerns\HasUlids;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Foundation\Auth\User as Authenticatable;
+use Laravel\Sanctum\HasApiTokens;
 
-class AdminUser extends BaseModel
+class AdminUser extends Authenticatable
 {
-    public $fillables = [
+    use HasApiTokens, HasFactory, HasUlids;
+
+    public $fillable = [
         'name',
         'username',
         'role_id',
@@ -22,7 +28,7 @@ class AdminUser extends BaseModel
     /**
      * relationship 
      */
-    public function Role(): BelongsTo
+    public function role(): BelongsTo
     {
         return $this->belongsTo(Role::class,'role_id');
     }
