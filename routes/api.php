@@ -3,6 +3,7 @@
 use App\Http\Controllers\Api\AdminUserController;
 use App\Http\Controllers\Api\AuthController;
 use App\Http\Controllers\Api\UserController;
+use App\Http\Controllers\Role\RoleController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -37,6 +38,12 @@ Route::prefix('v1')->group(function() {
             Route::get('/detail/{adminUserId}', 'userDetail');
             Route::put('/update/{adminUser}', 'userUpdate');
             Route::delete('/delete/{adminUser}', 'userDelete');
+        });
+
+        Route::controller(RoleController::class)->prefix('/role')->group(function () {
+            Route::get('/permissions', 'roleAndPermissionsList');
+            Route::get('/', 'roleList');
+            Route::post('/store', 'roleStore');
         });
     });
 
