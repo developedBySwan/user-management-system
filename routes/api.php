@@ -1,6 +1,8 @@
 <?php
 
+use App\Http\Controllers\Api\AdminUserController;
 use App\Http\Controllers\Api\AuthController;
+use App\Http\Controllers\Api\UserController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -29,5 +31,13 @@ Route::prefix('v1')->group(function() {
         });
     });
 
+    Route::middleware('auth:sanctum')->group(function () {
+        Route::controller(AdminUserController::class)->prefix("/admin-user")->group(function () {
+            Route::get('/', 'userList');
+            Route::get('/detail/{adminUserId}', 'userDetail');
+            Route::put('/update/{adminUser}', 'userUpdate');
+            Route::delete('/delete/{adminUser}', 'userDelete');
+        });
+    });
 
 });
