@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class Feature extends BaseModel
 {
-    public $fillables = [
+    public $fillable = [
         'name'
     ];
 
