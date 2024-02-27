@@ -21,7 +21,7 @@ class checkRolePermission
             ->withWhereHas('permissions', function ($query) {
                 $query->with('feature');
             })
-            ->where('id',Auth::user()->role_id)
+            ->where('id', Auth::user()->role_id)
             ->first();
 
         return $next($request);

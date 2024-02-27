@@ -23,9 +23,9 @@ class AdminUserController extends Controller
 
     /**
      * Admin User list endpoint
-     * 
+     *
      * @param \Illuminate\Http\Request $request
-     * 
+     *
      * @return \Illuminate\Http\Resources\Json\AnonymousResourceCollection
      */
     public function userList(Request $request): AnonymousResourceCollection
@@ -35,9 +35,9 @@ class AdminUserController extends Controller
 
     /**
      * Admin User Detail API
-     * 
+     *
      * @param string $adminUserId
-     * 
+     *
      * @return \App\Http\Resources\AdminUser\AdminUserDetailResource
      */
     public function userDetail(string $adminUserId): AdminUserDetailResource
@@ -51,9 +51,9 @@ class AdminUserController extends Controller
      * @param \App\Http\Requests\AdminUser\AdminUserEditRequest $adminUserEditRequest
      * @return JsonResponse
      */
-    public function userUpdate(AdminUser $adminUser,AdminUserEditRequest $adminUserEditRequest): JsonResponse
+    public function userUpdate(AdminUser $adminUser, AdminUserEditRequest $adminUserEditRequest): JsonResponse
     {
-        $this->adminUserRepositoryInterface->adminUserEdit($adminUser,$adminUserEditRequest->validated());
+        $this->adminUserRepositoryInterface->adminUserEdit($adminUser, $adminUserEditRequest->validated());
 
         return response()->json([
             'message' => "Updated Successfully",
@@ -62,7 +62,7 @@ class AdminUserController extends Controller
 
 
     /**
-     * User Delete Api 
+     * User Delete Api
      * @param \App\Models\AdminUser $adminUser
      * @return \Illuminate\Http\JsonResponse
      */
@@ -74,5 +74,5 @@ class AdminUserController extends Controller
             'message' => "Successfully Deleted",
         ]);
     }
-    
+
 }

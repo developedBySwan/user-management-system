@@ -18,9 +18,9 @@ class AdminUserRepository implements AdminUserRepositoryInterface
 
     /**
      * Admin User List with pagination
-     * 
+     *
      * @param \Illuminate\Http\Request $request
-     * 
+     *
      * @return \Illuminate\Pagination\LengthAwarePaginator
      */
     public function adminUserList(Request $request): LengthAwarePaginator
@@ -30,17 +30,17 @@ class AdminUserRepository implements AdminUserRepositoryInterface
             ->when($request->filled('name'), function ($query) use ($request) {
                 $query->where('name', 'LIKE', '%' . $request->input('name') . '%');
             })
-            ->when($request->filled('phone'),fn($query) => $query->where('phone','LIKE','%'.$request->input('phone').'%'))
-            ->when($request->filled('email'),fn($query) => $query->where('email','LIKE','%'.$request->input('email').'%'))
-            ->when($request->filled('gender'),fn($query) => $query->where('gender',$request->input('email')))
-            ->when($request->filled('is_active'),fn($query) => $query->where('is_active',$request->boolean('is_active')))
+            ->when($request->filled('phone'), fn ($query) => $query->where('phone', 'LIKE', '%'.$request->input('phone').'%'))
+            ->when($request->filled('email'), fn ($query) => $query->where('email', 'LIKE', '%'.$request->input('email').'%'))
+            ->when($request->filled('gender'), fn ($query) => $query->where('gender', $request->input('email')))
+            ->when($request->filled('is_active'), fn ($query) => $query->where('is_active', $request->boolean('is_active')))
             ->paginate(20);
     }
 
     /**
-     * Admin User Detail 
+     * Admin User Detail
      * @param string $adminUserId
-     * 
+     *
      * @return \Illuminate\Database\Eloquent\Builder|\Illuminate\Database\Eloquent\Builder[]|\Illuminate\Database\Eloquent\Collection|\Illuminate\Database\Eloquent\Model
      */
     public function adminUserDetail(string $adminUserId)
@@ -50,7 +50,7 @@ class AdminUserRepository implements AdminUserRepositoryInterface
 
     /**
      * Edit Logic for admin user
-     * 
+     *
      * @param \App\Models\AdminUser $adminUser
      * @param array $data
      * @return void

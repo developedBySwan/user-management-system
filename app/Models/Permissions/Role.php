@@ -12,10 +12,10 @@ class Role extends BaseModel
     ];
 
     /**
-     * Relationship 
+     * Relationship
      */
     public function permissions(): BelongsToMany
     {
-        return $this->belongsToMany(Permission::class,'role_permissions');
+        return $this->belongsToMany(Permission::class, 'role_permissions');
     }
 }

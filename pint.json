@@ -1,0 +1,12 @@
+{
+    "preset": "psr12",
+    "rules": {
+        "is_null": true,
+        "no_unused_imports": true,
+        "ordered_traits": true,
+        "array_indentation": true,
+        "trim_array_spaces": true,
+        "no_multiline_whitespace_around_double_arrow": true,
+        "no_empty_phpdoc": true
+    }
+}

@@ -31,7 +31,7 @@ class UserRegisterRequest extends FormRequest
             'email' => ['required','string','unique:admin_users,email'],
             'address' => ['required','string','max:255'],
             'password' => ['required'],
-            'gender' => ['required',Rule::in('male','female')],
+            'gender' => ['required',Rule::in('male', 'female')],
             'is_active' => ['required','boolean'],
         ];
     }

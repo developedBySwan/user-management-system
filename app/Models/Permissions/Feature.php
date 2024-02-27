@@ -13,6 +13,6 @@ class Feature extends BaseModel
 
     public function permissions(): HasMany
     {
-        return $this->hasMany(Permission::class,'feature_id','id');
+        return $this->hasMany(Permission::class, 'feature_id', 'id');
     }
 }

@@ -5,7 +5,6 @@ namespace Database\Seeders;
 use App\Models\Permissions\Permission;
 use App\Models\Permissions\Feature;
 use Illuminate\Database\Seeder;
-use Illuminate\Database\Eloquent\Factories\Factory;
 
 class PermissionSeeder extends Seeder
 {

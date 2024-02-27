@@ -20,9 +20,9 @@ class AuthController extends Controller
 
     public function login(LoginRequest $loginRequest): JsonResponse
     {
-        $adminUser = $this->authRepository->login($loginRequest->only('email','password'));
+        $adminUser = $this->authRepository->login($loginRequest->only('email', 'password'));
 
-        abort_if(is_null($adminUser),422,"Invalid Credentials");
+        abort_if(null === $adminUser, 422, "Invalid Credentials");
 
         return response()->json([
             'data' => [
@@ -34,7 +34,7 @@ class AuthController extends Controller
 
     /**
      * User Registration api add
-     * 
+     *
      * @param \App\Http\Requests\Auth\UserRegisterRequest $request
      * @return JsonResponse|mixed
      */

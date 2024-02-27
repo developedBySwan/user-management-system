@@ -11,7 +11,9 @@ use Laravel\Sanctum\HasApiTokens;
 
 class AdminUser extends Authenticatable
 {
-    use HasApiTokens, HasFactory, HasUlids;
+    use HasApiTokens;
+    use HasFactory;
+    use HasUlids;
 
     public $fillable = [
         'name',
@@ -26,10 +28,10 @@ class AdminUser extends Authenticatable
     ];
 
     /**
-     * relationship 
+     * relationship
      */
     public function role(): BelongsTo
     {
-        return $this->belongsTo(Role::class,'role_id');
+        return $this->belongsTo(Role::class, 'role_id');
     }
 }

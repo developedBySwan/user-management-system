@@ -23,9 +23,9 @@ class RoleController extends Controller
 
     /**
      * Api For Role And Permissions
-     * 
+     *
      * @return JsonResponse
-     * 
+     *
      */
     public function roleAndPermissionsList(): AnonymousResourceCollection
     {
@@ -34,7 +34,7 @@ class RoleController extends Controller
 
     /**
      * Role List Endpoint
-     * 
+     *
      * @param \Illuminate\Http\Request $request
      * @return \Illuminate\Http\Resources\Json\AnonymousResourceCollection
      */
@@ -50,7 +50,7 @@ class RoleController extends Controller
     public function roleStore(RoleStoreRequest $roleStoreRequest): JsonResponse
     {
         $this->roleRepositoryInterface->roleStore($roleStoreRequest->validated());
-        
+
         return response()->json([
             'message' => 'successfully Created',
         ]);

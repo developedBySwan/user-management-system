@@ -25,13 +25,13 @@ class AdminUserEditRequest extends FormRequest
     {
         return [
             'name' => ['required','string','max:255'],
-            'username' => ['required','string',Rule::unique('admin_users','username')->ignore($this->id)],
+            'username' => ['required','string',Rule::unique('admin_users', 'username')->ignore($this->id)],
             'role_id' => ['required','string','exists:roles,id'],
-            'phone' => ['required','string', Rule::unique('admin_users','phone')->ignore($this->id)],
-            'email' => ['required','string',Rule::unique('admin_users','email')->ignore($this->id)],
+            'phone' => ['required','string', Rule::unique('admin_users', 'phone')->ignore($this->id)],
+            'email' => ['required','string',Rule::unique('admin_users', 'email')->ignore($this->id)],
             'address' => ['required','string','max:255'],
             'password' => ['required'],
-            'gender' => ['required',Rule::in('male','female')],
+            'gender' => ['required',Rule::in('male', 'female')],
             'is_active' => ['required','boolean'],
         ];
     }

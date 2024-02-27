@@ -1,4 +1,5 @@
 <?php
+
 namespace App\Repositories;
 
 use App\Interfaces\RoleRepositoryInterface;
@@ -7,7 +8,6 @@ use App\Models\Permissions\Permission;
 use App\Models\Permissions\Role;
 use Exception;
 use Illuminate\Http\Request;
-use Illuminate\Http\Resources\Json\JsonResource;
 use Illuminate\Pagination\LengthAwarePaginator;
 use Illuminate\Support\Facades\DB;
 
@@ -22,7 +22,7 @@ class RoleRepository implements RoleRepositoryInterface
 
     /**
      * Role And Permission List
-     * 
+     *
      */
     public function roleAndPermissionsList()
     {
@@ -41,22 +41,22 @@ class RoleRepository implements RoleRepositoryInterface
     public function roleList(Request $request): LengthAwarePaginator
     {
         return $this->query
-                ->when($request->filled('name'), fn($query) => $query->where('name','LIKE','%'.$query->input('name').'%'))
+                ->when($request->filled('name'), fn ($query) => $query->where('name', 'LIKE', '%'.$query->input('name').'%'))
                 ->orderBy('name')
                 ->paginate(20);
     }
 
     /**
-     * Role Store 
+     * Role Store
      * @param array $data
      * @return void
      */
     public function roleStore(array $data): void
     {
         DB::beginTransaction();
-        
+
         try {
-        
+
             $role = Role::create([
                 'name' => $data['name']
             ]);
@@ -72,7 +72,7 @@ class RoleRepository implements RoleRepositoryInterface
     }
 
     /**
-     * Role Update 
+     * Role Update
      * @param \App\Models\Permissions\Role $role
      * @param array $data
      * @return void
@@ -80,19 +80,19 @@ class RoleRepository implements RoleRepositoryInterface
     public function roleUpdate(Role $role, array $data): void
     {
         DB::beginTransaction();
-        
-            try {
-                $role->update([
-                    'name' => $data['name'],
-                ]);
-            
-                $role->refresh()->permissions()->sync($data['permissions']);
-            DB::commit();
-            } catch (Exception $e) {
-                DB::rollBack();
 
-                abort(500, $e->getMessage());
-            }
+        try {
+            $role->update([
+                'name' => $data['name'],
+            ]);
+
+            $role->refresh()->permissions()->sync($data['permissions']);
+            DB::commit();
+        } catch (Exception $e) {
+            DB::rollBack();
+
+            abort(500, $e->getMessage());
+        }
     }
 
     /**
