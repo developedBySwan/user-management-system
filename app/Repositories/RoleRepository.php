@@ -46,31 +46,71 @@ class RoleRepository implements RoleRepositoryInterface
                 ->paginate(20);
     }
 
-    public function roleStore(array $data)
+    /**
+     * Role Store 
+     * @param array $data
+     * @return void
+     */
+    public function roleStore(array $data): void
     {
-        $permissions = $data['permissions'];
-
-        foreach($permissions as $feature => $permission) {
-            dd($permission,$feature);
-        }
-
+        DB::beginTransaction();
+        
         try {
-            DB::beginTransaction();
-
+        
             $role = Role::create([
                 'name' => $data['name']
             ]);
 
+            $role->permissions()->attach($data['permissions']);
+
             DB::commit();
         } catch (Exception $e) {
             DB::rollBack();
-            
-            return response()->json([
-                'message' => $e->getMessage(),
-                'status' => 500
-            ]);
+
+            abort(500, $e->getMessage());
         }
+    }
 
+    /**
+     * Role Update 
+     * @param \App\Models\Permissions\Role $role
+     * @param array $data
+     * @return void
+     */
+    public function roleUpdate(Role $role, array $data): void
+    {
+        DB::beginTransaction();
+        
+            try {
+                $role->update([
+                    'name' => $data['name'],
+                ]);
+            
+                $role->refresh()->permissions()->sync($data['permissions']);
+            DB::commit();
+            } catch (Exception $e) {
+                DB::rollBack();
 
+                abort(500, $e->getMessage());
+            }
+    }
+
+    /**
+     * Role Delete
+     * @param \App\Models\Permissions\Role $role
+     * @return void
+     */
+    public function roleDelete(Role $role): void
+    {
+        DB::beginTransaction();
+
+        try {
+            $role->permissions()->detach();
+            $role->delete();
+
+            DB::commit();
+        } catch (Exception $e) {
+            abort(500, $e->getMessage());
+        }
     }
 }

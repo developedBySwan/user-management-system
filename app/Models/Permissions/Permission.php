@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 
 class Permission extends BaseModel
 {
-    public $fillables = [
+    public $fillable = [
         'name',
         'feature_id'
     ];

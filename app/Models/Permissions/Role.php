@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 
 class Role extends BaseModel
 {
-    public $fillables = [
+    public $fillable = [
         'name',
     ];
 

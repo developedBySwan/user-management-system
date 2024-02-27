@@ -7,6 +7,7 @@ use App\Http\Requests\Role\RoleStoreRequest;
 use App\Http\Resources\Role\RoleAndPermissionResponse;
 use App\Http\Resources\Role\RoleListResponse;
 use App\Interfaces\RoleRepositoryInterface;
+use App\Models\Permissions\Role;
 use Illuminate\Http\Request;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
@@ -52,6 +53,35 @@ class RoleController extends Controller
         
         return response()->json([
             'message' => 'successfully Created',
+        ]);
+    }
+
+    /**
+     * Role Update Api add
+     * @param \App\Models\Permissions\Role $role
+     * @param \App\Http\Requests\Role\RoleStoreRequest $roleStoreRequest
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function roleUpdate(Role $role, RoleStoreRequest $roleStoreRequest): JsonResponse
+    {
+        $this->roleRepositoryInterface->roleUpdate($role, $roleStoreRequest->validated());
+
+        return response()->json([
+            'message' => "Successfully Updated"
+        ]);
+    }
+
+    /**
+     * Role Delete Api
+     * @param \App\Models\Permissions\Role $role
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function roleDelete(Role $role): JsonResponse
+    {
+        $this->roleRepositoryInterface->roleDelete($role);
+
+        return response()->json([
+            'message' => "Successfully Deleted"
         ]);
     }
 }

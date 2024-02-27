@@ -44,6 +44,8 @@ Route::prefix('v1')->group(function() {
             Route::get('/permissions', 'roleAndPermissionsList');
             Route::get('/', 'roleList');
             Route::post('/store', 'roleStore');
+            Route::put('/update/{role}', 'roleUpdate');
+            Route::delete('/delete/{role}', 'roleDelete');
         });
     });
 
