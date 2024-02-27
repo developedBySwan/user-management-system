@@ -2,6 +2,7 @@
 namespace App\Repositories;
 
 use App\Interfaces\RoleRepositoryInterface;
+use App\Models\Permissions\Feature;
 use App\Models\Permissions\Permission;
 use App\Models\Permissions\Role;
 use Exception;
@@ -25,11 +26,9 @@ class RoleRepository implements RoleRepositoryInterface
      */
     public function roleAndPermissionsList()
     {
-        $permissions = Permission::query()
-                        // ->select(DB::raw('MIN(id) AS id'),DB::raw('MAX(name) AS name'),'feature_id')
-                        ->with('feature')
-                        // ->groupBy('feature_id')
-                        ->count();
+        $permissions = Feature::query()
+                ->with('permissions')
+                ->get();
 
         return $permissions;
     }

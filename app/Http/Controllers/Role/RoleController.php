@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Role;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Role\RoleStoreRequest;
+use App\Http\Resources\Role\RoleAndPermissionResponse;
 use App\Http\Resources\Role\RoleListResponse;
 use App\Interfaces\RoleRepositoryInterface;
 use Illuminate\Http\Request;
@@ -25,11 +26,9 @@ class RoleController extends Controller
      * @return JsonResponse
      * 
      */
-    public function roleAndPermissionsList(): JsonResponse
+    public function roleAndPermissionsList(): AnonymousResourceCollection
     {
-        return response()->json([
-            'data' => $this->roleRepositoryInterface->roleAndPermissionsList(),
-        ]);
+        return RoleAndPermissionResponse::collection($this->roleRepositoryInterface->roleAndPermissionsList());
     }
 
     /**
