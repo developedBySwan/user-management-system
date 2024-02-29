@@ -47,9 +47,6 @@ class AdminUserResource extends Resource
                     Forms\Components\TextInput::make('name')
                         ->required()
                         ->maxLength(255),
-                    Forms\Components\TextInput::make('username')
-                        ->required()
-                        ->maxLength(255),
                     Forms\Components\Select::make('role_id')
                         ->relationship('role', 'name')
                         ->required(),
