@@ -47,6 +47,7 @@ class RoleResource extends Resource
                     ->schema([
                         Forms\Components\TextInput::make('name')
                             ->required()
+                            ->unique(table: Role::class,ignoreRecord: true)
                             ->maxLength(255),
                     ]),
                 Forms\Components\Section::make()

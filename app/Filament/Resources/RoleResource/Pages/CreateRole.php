@@ -14,64 +14,19 @@ class CreateRole extends CreateRecord
 {
     protected static string $resource = RoleResource::class;
 
-    public function create(bool $another = false): void
+    public function afterCreate(): void
     {
-        $this->authorizeAccess();
+        $data = $this->form->getState();
 
-        try {
-            DB::beginTransaction();
+        $modifiedData = array_slice($data, 1, count($data));
 
-            $this->callHook('beforeValidate');
+        $permissionData = array_keys(collect($modifiedData)->filter(fn ($col, $key) => $col == true)->toArray());
 
-            $data = $this->form->getState();
+        $this->record->permissions()->attach($permissionData);
+    }
 
-            $this->callHook('afterValidate');
-
-            $data = $this->mutateFormDataBeforeCreate($data);
-
-            $this->callHook('beforeCreate');
-
-            $this->record = $this->handleRecordCreation($data);
-
-            $modifiedData = array_slice($data, 1, count($data));
-
-            $permissionData = array_keys(collect($modifiedData)->filter(fn ($col, $key) => $col == true)->toArray());
-
-            $this->record->permissions()->attach($permissionData);
-
-            $this->form->model($this->getRecord())->saveRelationships();
-
-            $this->callHook('afterCreate');
-
-            DB::commit();
-        } catch (Halt $exception) {
-            $exception->shouldRollbackDatabaseTransaction() ?
-                DB::rollBack() :
-                DB::commit();
-
-            return;
-        } catch (\Throwable $exception) {
-            DB::rollBack();
-
-            throw $exception;
-        }
-
-        $this->rememberData();
-
-        $this->getCreatedNotification()?->send();
-
-        if ($another) {
-            // Ensure that the form record is anonymized so that relationships aren't loaded.
-            $this->form->model($this->getRecord()::class);
-            $this->record = null;
-
-            $this->fillForm();
-
-            return;
-        }
-
-        $redirectUrl = $this->getRedirectUrl();
-
-        $this->redirect($redirectUrl, navigate: FilamentView::hasSpaMode() && is_app_url($redirectUrl));
+    protected function getRedirectUrl(): string
+    {
+        return $this->getResource()::getUrl('index');
     }
 }
