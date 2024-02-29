@@ -68,11 +68,11 @@ class RoleResource extends Resource
             $permissions = [];
 
             foreach($feature->permissions as $permission) {
-                $permissions[] = Forms\Components\Checkbox::make($permission->id)->label($permission->name);
+                $permissions[] = Forms\Components\Checkbox::make($permission->id)->label(ucfirst($permission->name));
             }
 
             $permissionLists[] = Fieldset::make($feature->name)
-                ->label(($feature->name))
+                ->label(ucfirst($feature->name))
                 ->schema($permissions)
                 ->columns(8);
         }
