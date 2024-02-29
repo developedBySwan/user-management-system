@@ -1,10 +1,11 @@
 <?php
+
 use Illuminate\Support\Facades\Cache;
 
 if (! function_exists('can_access')) {
-    function can_access($feature, $permission): bool 
+    function can_access($feature, $permission): bool
     {
-        $role = Cache::get(auth()->user()->role_id, function () {
+        $role = Cache::rememberForever(auth()->user()->role_id, function () {
             return \App\Models\Permissions\Role::query()
             ->with([
                 'permissions' => [
@@ -13,10 +14,10 @@ if (! function_exists('can_access')) {
             ])
             ->findOrFail(auth()->user()->role_id);
         });
-        
+
         return (bool) ($role->permissions
-                    ->where('name',$permission)
-                    ->filter(fn($permission) => $permission->feature->name == $feature)
+                    ->where('name', $permission)
+                    ->filter(fn ($permission) => $permission->feature->name == $feature)
                     ->count() > 0);
     }
 }

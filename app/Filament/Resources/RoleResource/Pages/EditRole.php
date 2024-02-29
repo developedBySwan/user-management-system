@@ -7,7 +7,7 @@ use App\Models\Permissions\Role;
 use Filament\Actions;
 use Filament\Resources\Pages\EditRecord;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\ModelNotFoundException;
+use Illuminate\Support\Facades\Cache;
 
 class EditRole extends EditRecord
 {
@@ -50,12 +50,14 @@ class EditRole extends EditRecord
     {
         $modifiedData = array_slice($data, 1, count($data));
 
-        $permissionData = array_keys(collect($modifiedData)->filter(fn($col, $key) => $col == true)->toArray());
+        $permissionData = array_keys(collect($modifiedData)->filter(fn ($col, $key) => $col == true)->toArray());
 
         $record->permissions()->sync($permissionData);
 
         $record->update($data);
-    
+
+        Cache::forget($record->id);
+
         return $record;
     }
 

@@ -9,6 +9,7 @@ use App\Models\Permissions\Role;
 use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Pagination\LengthAwarePaginator;
+use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\DB;
 
 class RoleRepository implements RoleRepositoryInterface
@@ -87,6 +88,8 @@ class RoleRepository implements RoleRepositoryInterface
             ]);
 
             $role->refresh()->permissions()->sync($data['permissions']);
+
+            Cache::forget($role->refresh()->id);
             DB::commit();
         } catch (Exception $e) {
             DB::rollBack();

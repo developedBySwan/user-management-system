@@ -2,7 +2,6 @@
 
 namespace App\Filament\Resources\RoleResource\Pages;
 
-use Filament\Actions;
 use Illuminate\Support\Facades\DB;
 use App\Filament\Resources\RoleResource;
 use Filament\Resources\Pages\CreateRecord;
@@ -36,8 +35,8 @@ class CreateRole extends CreateRecord
 
             $modifiedData = array_slice($data, 1, count($data));
 
-            $permissionData = array_keys(collect($modifiedData)->filter(fn($col, $key) => $col == true)->toArray());
-            
+            $permissionData = array_keys(collect($modifiedData)->filter(fn ($col, $key) => $col == true)->toArray());
+
             $this->record->permissions()->attach($permissionData);
 
             $this->form->model($this->getRecord())->saveRelationships();

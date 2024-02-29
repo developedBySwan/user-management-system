@@ -3,7 +3,6 @@
 namespace App\Filament\Resources;
 
 use App\Filament\Resources\RoleResource\Pages;
-use App\Filament\Resources\RoleResource\RelationManagers;
 use App\Models\Permissions\Feature;
 use App\Models\Permissions\Role;
 use Filament\Forms;
@@ -12,9 +11,7 @@ use Filament\Forms\Form;
 use Filament\Resources\Resource;
 use Filament\Tables;
 use Filament\Tables\Table;
-use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\SoftDeletingScope;
 
 class RoleResource extends Resource
 {
@@ -24,7 +21,7 @@ class RoleResource extends Resource
 
     public static function canAccess(): bool
     {
-        return can_access('role','view');
+        return can_access('role', 'view');
     }
 
     public static function canCreate(): bool
@@ -87,7 +84,7 @@ class RoleResource extends Resource
         return $table
             ->columns([
                 Tables\Columns\TextColumn::make('name')
-                ->searchable(isIndividual: true,isGlobal: false)
+                ->searchable(isIndividual: true, isGlobal: false)
             ])
             ->filters([
                 //

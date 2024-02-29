@@ -3,7 +3,6 @@
 namespace App\Filament\Resources;
 
 use App\Filament\Resources\AdminUserResource\Pages;
-use App\Filament\Resources\AdminUserResource\RelationManagers;
 use App\Models\AdminUser;
 use Filament\Forms;
 use Filament\Forms\Form;
@@ -11,11 +10,8 @@ use Filament\Resources\Resource;
 use Filament\Tables;
 use Filament\Tables\Enums\FiltersLayout;
 use Filament\Tables\Filters\Filter;
-use Filament\Tables\Filters\SelectFilter;
 use Filament\Tables\Table;
-use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\SoftDeletingScope;
 
 class AdminUserResource extends Resource
 {
@@ -25,7 +21,7 @@ class AdminUserResource extends Resource
 
     public static function canAccess(): bool
     {
-        return can_access('user','view');
+        return can_access('user', 'view');
     }
 
     public static function canCreate(): bool
@@ -46,38 +42,38 @@ class AdminUserResource extends Resource
     public static function form(Form $form): Form
     {
         return $form->schema([
-                Forms\Components\Section::make()
-                    ->schema([
-                        Forms\Components\TextInput::make('name')
-                            ->required()
-                            ->maxLength(255),
-                        Forms\Components\TextInput::make('username')
-                            ->required()
-                            ->maxLength(255),
-                        Forms\Components\Select::make('role_id')
-                            ->relationship('role', 'name')
-                            ->required(),
-                        Forms\Components\TextInput::make('phone')
-                            ->tel()
-                            ->required()
-                            ->maxLength(255),
-                        Forms\Components\TextInput::make('email')
-                            ->email()
-                            ->required()
-                            ->maxLength(255),
-                        Forms\Components\TextInput::make('address')
-                            ->maxLength(255),
-                        Forms\Components\TextInput::make('password')
-                            ->password()
-                            ->required()
-                            ->maxLength(255),
-                        Forms\Components\TextInput::make('gender')
-                            ->required()
-                            ->maxLength(255),
-                        Forms\Components\Toggle::make('is_active')
-                            ->required(),
-                    ])
-            ]);
+            Forms\Components\Section::make()
+                ->schema([
+                    Forms\Components\TextInput::make('name')
+                        ->required()
+                        ->maxLength(255),
+                    Forms\Components\TextInput::make('username')
+                        ->required()
+                        ->maxLength(255),
+                    Forms\Components\Select::make('role_id')
+                        ->relationship('role', 'name')
+                        ->required(),
+                    Forms\Components\TextInput::make('phone')
+                        ->tel()
+                        ->required()
+                        ->maxLength(255),
+                    Forms\Components\TextInput::make('email')
+                        ->email()
+                        ->required()
+                        ->maxLength(255),
+                    Forms\Components\TextInput::make('address')
+                        ->maxLength(255),
+                    Forms\Components\TextInput::make('password')
+                        ->password()
+                        ->required()
+                        ->maxLength(255),
+                    Forms\Components\TextInput::make('gender')
+                        ->required()
+                        ->maxLength(255),
+                    Forms\Components\Toggle::make('is_active')
+                        ->required(),
+                ])
+        ]);
     }
 
     public static function table(Table $table): Table
@@ -95,7 +91,7 @@ class AdminUserResource extends Resource
             ])
             ->filters([
                 // Filter::make('is_active')->label('Is Active')->toggle(),
-            ],layout: FiltersLayout::AboveContent)
+            ], layout: FiltersLayout::AboveContent)
             ->actions([
                 Tables\Actions\EditAction::make()->label(""),
                 Tables\Actions\DeleteAction::make()->label(""),

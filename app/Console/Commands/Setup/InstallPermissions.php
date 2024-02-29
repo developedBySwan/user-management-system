@@ -27,8 +27,8 @@ class InstallPermissions extends Command
      */
     public function handle()
     {
-        Permission::truncate();
-        Feature::truncate();
+        // Permission::truncate();
+        // Feature::truncate();
 
         $featurePermissions = config('permissions');
 
