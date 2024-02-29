@@ -13,13 +13,34 @@ use Filament\Resources\Resource;
 use Filament\Tables;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
 
 class RoleResource extends Resource
 {
     protected static ?string $model = Role::class;
 
-    protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
+    protected static ?string $navigationIcon = 'heroicon-o-shield-check';
+
+    public static function canAccess(): bool
+    {
+        return can_access('role','view');
+    }
+
+    public static function canCreate(): bool
+    {
+        return can_access('role', 'create');
+    }
+
+    public static function canEdit(Model $record): bool
+    {
+        return (bool) (can_access('role', 'update') && static::can('update', $record));
+    }
+
+    public static function canDelete(Model $record): bool
+    {
+        return (bool) (can_access('role', 'delete') && static::can('update', $record));
+    }
 
     public static function form(Form $form): Form
     {

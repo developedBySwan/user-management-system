@@ -14,13 +14,34 @@ use Filament\Tables\Filters\Filter;
 use Filament\Tables\Filters\SelectFilter;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
 
 class AdminUserResource extends Resource
 {
     protected static ?string $model = AdminUser::class;
 
-    protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
+    protected static ?string $navigationIcon = 'heroicon-o-user';
+
+    public static function canAccess(): bool
+    {
+        return can_access('user','view');
+    }
+
+    public static function canCreate(): bool
+    {
+        return can_access('user', 'create');
+    }
+
+    public static function canEdit(Model $record): bool
+    {
+        return (bool) (can_access('user', 'update') && static::can('update', $record));
+    }
+
+    public static function canDelete(Model $record): bool
+    {
+        return (bool) (can_access('user', 'delete') && static::can('update', $record));
+    }
 
     public static function form(Form $form): Form
     {
@@ -102,8 +123,8 @@ class AdminUserResource extends Resource
         ];
     }
 
-        protected function getRedirectUrl(): string
-        {
-            return $this->getResource()::getUrl('index');
-        }
+    protected function getRedirectUrl(): string
+    {
+        return $this->getResource()::getUrl('index');
+    }
 }
