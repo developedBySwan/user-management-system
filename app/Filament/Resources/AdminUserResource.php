@@ -12,6 +12,7 @@ use Filament\Tables\Enums\FiltersLayout;
 use Filament\Tables\Filters\Filter;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\Hash;
 
 class AdminUserResource extends Resource
 {
@@ -63,6 +64,7 @@ class AdminUserResource extends Resource
                     Forms\Components\TextInput::make('password')
                         ->password()
                         ->required()
+                        ->dehydrateStateUsing(fn ($state) => Hash::make($state))
                         ->maxLength(255),
                     Forms\Components\TextInput::make('gender')
                         ->required()

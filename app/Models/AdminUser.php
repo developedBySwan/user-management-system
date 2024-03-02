@@ -29,6 +29,10 @@ class AdminUser extends Authenticatable implements FilamentUser
         'is_active'
     ];
 
+    protected $casts = [
+        'password' => 'hashed',
+    ];
+
     public function canAccessPanel(Panel $panel): bool
     {
         return true;
