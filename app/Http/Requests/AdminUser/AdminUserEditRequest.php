@@ -31,7 +31,7 @@ class AdminUserEditRequest extends FormRequest
             'email' => ['required','string',Rule::unique('admin_users', 'email')->ignore($this->id)],
             'address' => ['required','string','max:255'],
             'password' => ['required'],
-            'gender' => ['required',Rule::in('male', 'female')],
+            'gender' => ['required'],
             'is_active' => ['required','boolean'],
         ];
     }

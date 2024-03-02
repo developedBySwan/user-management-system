@@ -2,6 +2,7 @@
 
 namespace App\Http\Requests\Auth;
 
+use App\Enums\Gender;
 use Illuminate\Support\Str;
 use Illuminate\Validation\Rule;
 use Illuminate\Foundation\Http\FormRequest;
@@ -31,7 +32,7 @@ class UserRegisterRequest extends FormRequest
             'email' => ['required','string','unique:admin_users,email'],
             'address' => ['required','string','max:255'],
             'password' => ['required'],
-            'gender' => ['required',Rule::in('male', 'female')],
+            'gender' => ['required',Rule::enum(Gender::class)],
             'is_active' => ['required','boolean'],
         ];
     }

@@ -3,6 +3,7 @@
 namespace Database\Factories;
 
 use App\Enums\Gender;
+use App\Models\Permissions\Role;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Database\Eloquent\Factories\Factory;
@@ -27,7 +28,7 @@ class AdminUserFactory extends Factory
             'email' => fake()->email,
             'address' => fake()->address,
             'password' => Hash::make('test'),
-            'gender' => fake()->randomElement([Gender::MALE,Gender::FEMALE,Gender::OTHER]),
+            'gender' => fake()->randomElement([Gender::Male,Gender::Female,Gender::Other]),
             'is_active' => fake()->boolean,
         ];
     }
