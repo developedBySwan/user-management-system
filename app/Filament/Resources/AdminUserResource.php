@@ -2,6 +2,7 @@
 
 namespace App\Filament\Resources;
 
+use App\Enums\Gender;
 use App\Filament\Resources\AdminUserResource\Pages;
 use App\Models\AdminUser;
 use Filament\Forms;
@@ -66,9 +67,9 @@ class AdminUserResource extends Resource
                         ->required()
                         ->dehydrateStateUsing(fn ($state) => Hash::make($state))
                         ->maxLength(255),
-                    Forms\Components\TextInput::make('gender')
+                    Forms\Components\Select::make('gender')
                         ->required()
-                        ->maxLength(255),
+                        ->options(Gender::getAllValues()),
                     Forms\Components\Toggle::make('is_active')
                         ->required(),
                 ])

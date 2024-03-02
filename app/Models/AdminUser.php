@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Enums\Gender;
 use App\Models\Permissions\Role;
 use Filament\Models\Contracts\FilamentUser;
 use Filament\Panel;
@@ -31,6 +32,7 @@ class AdminUser extends Authenticatable implements FilamentUser
 
     protected $casts = [
         'password' => 'hashed',
+        'gender' => Gender::class,
     ];
 
     public function canAccessPanel(Panel $panel): bool
