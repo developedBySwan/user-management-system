@@ -3,22 +3,16 @@
 namespace App\Enums;
 
 enum Gender : string {
-    case MALE = 'male';
-    case FEMALE = 'female';
-    case OTHER = 'other';
+    case Male = 'male';
+    case Female = 'female';
+    case Other = 'other';
 
-    public static function getNames(): array
+    public function getLabel(): ?string
     {
-        return array_column(self::cases(), 'name');
-    }
-
-    public static function getValues(): array
-    {
-        return array_column(self::cases(), 'value');
-    }
-
-    public static function getAllValues(): array
-    {
-        return array_combine(self::getValues(), self::getNames());
+        return match ($this) {
+            self::Male => 'Male',
+            self::Female => 'Female',
+            self::Other => 'Other',
+        };
     }
 }

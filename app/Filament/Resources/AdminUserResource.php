@@ -69,7 +69,7 @@ class AdminUserResource extends Resource
                         ->maxLength(255),
                     Forms\Components\Select::make('gender')
                         ->required()
-                        ->options(Gender::getAllValues()),
+                        ->options(Gender::class),
                     Forms\Components\Toggle::make('is_active')
                         ->required(),
                 ])
@@ -85,7 +85,7 @@ class AdminUserResource extends Resource
                 Tables\Columns\TextColumn::make('role.name'),
                 Tables\Columns\TextColumn::make('phone'),
                 Tables\Columns\TextColumn::make('email'),
-                Tables\Columns\TextColumn::make('gender'),
+                Tables\Columns\TextColumn::make('gender')->formatStateUsing(fn($state) => ucfirst($state->value)),
                 Tables\Columns\IconColumn::make('is_active')
                     ->boolean(),
             ])

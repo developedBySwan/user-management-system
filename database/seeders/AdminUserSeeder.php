@@ -13,6 +13,8 @@ class AdminUserSeeder extends Seeder
      */
     public function run(): void
     {
+        AdminUser::truncate();
+        
         AdminUser::factory()
             ->for(Role::factory())
             ->count(10)->create();
